@@ -1,0 +1,24 @@
+public class TetrisTest{
+    
+
+
+
+    @test
+    public void testCheckRow(){
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_WHATEVER);
+
+    }
+
+    public void testRowRemoval(int row){
+        for (int i = 0; i< Grid.Width; i++){
+            Grid.set(row, i, Color.BLUE);
+        }
+        
+        assertEquals(true, Grid.checkRows());
+    }
+    public static void main(String[] args) {
+        testRowRemoval(1);
+    
+    }
+}

@@ -1,0 +1,30 @@
+~~~~
+
+Code
+
+[x] modify the game so that it will produce another L-shaped piece once the current one has stopped moving
+
+[x] add the ability for the L-shaped piece to move LEFT and RIGHT 
+
+[x] add drop when space key pressed
+
+[x] implement removal of solid rows from the Grid
+
+[x] Implement the method checkRows() in the Grid class
+        All such rows should be found and removed in one call to checkRows
+
+[] Write two unit tests to confirm:
+    [] removal of one or more rows within the grid
+    and either
+    [] the motion of an L-shaped piece
+
+~~~~~
+
+REPORT
+
+[]  draw an object diagram showing the relationships    (has_a) between the objects involved in the simulation of the tetris game
+
+[]  Explain how you implemented the "drop-down" feature when the space key is pressed.
+
+[]  Describe the unit tests that you designed.
+

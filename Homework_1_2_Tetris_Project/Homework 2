@@ -1,0 +1,80 @@
+Overview
+You will be completing the game Tetris. The features needed are
+    1.  Adding the other 6 pieces
+    2.  Adding the ability to rotate the pieces
+Concepts
+The purpose of this assignment is to gain experience with the following new concepts:
+inheritance
+class hierarchy
+dynamic dispatch
+algorithms
+unit testing (add to what you did in homework #1)
+ 
+
+Implementation Requirements
+OTHER PIECES:  The first step in  the assignment is to add  the other six pieces.   Let's think a little about the planning though;  we don't want the Game class to have to know about all 7 different piece types (we wouldn't want Game to have 7 different instance variables, 1 for each type. How would it keep track of which one was current?)  Instead,  Game should know about 1 type ( a super type) and let dynamic dispatch do the work for us.
+So to start, we need to redesign (or refactor)  the current code.  To do this, we want a super type that contains all of the behaviors common to all of the pieces. This can be achieved with an interface Piece. Then sub types will implement the interface for the individual pieces and their individual needs.  However, some implementations will be the same for all of the pieces (e.g. getColor()). To avoid repeating code, the implementation of the methods common to all of the pieces can be written in an abstract class AbstractPiece that implements the Piece interface. This abstract class will also list the fields that are common to all of the pieces.
+
+So what is the same about all of the pieces?
+
+All of the method signatures currently in LShape are common to all of the pieces (except the constructor of course). They should be listed in the interface Piece. You will also add a rotate method since for this assignment we want the pieces to be able to rotate.
+All of the instances variables currently in LShape are common to all of the pieces. They should be declared in AbstractPiece as protected. Make sure that you delete them from LShape.
+The method implementations in LShape should be moved to AbstractPiece (except for the constructor code.)
+What is different about each piece:
+How each individual playing piece is constructed. That's it! Even though we may initially think that the rotation of a piece is specific to that piece and should be coded in its class, it is actually possible to write all of the rotation code in AbstractPiece as we will see below.
+1) Therefore, start by breaking up the LShape.java class into an interface (Piece), an abstract class (AbstractPiece) and a sub class (LShape with most of its code removed). 
+The only method in LShape should be the constructor: It should call the super class constructor and initialize the square array. Nothing else! For instance, the initialization of the grid instance field should be done in AbstractPiece and not in LShape.
+At this point, test your program.  It should run as it did before.
+2) Now it is time to add the other pieces.  You should create these new classes by deriving them from the AbstractPiece class. In the order they appear in the picture below, you can name the classes ZShape, SquareShape JShape, TShape, SShape, BarShape.  In particular, you will need to figure out how to initialize the pieces.   This will be similar to how the L-shaped piece was done, and, in fact, you may find it helpful to start each new class by copying the code from a previous shape and modifying it.  The pieces should be initalized in the following orientations:
+
+
+
+where the numbers refer to the index of each square in the 1D array of squares (Square[] square). The actual values of the indices don't really matter at this point, but they will become relevant when we talk about rotation. In the constructors of the pieces, take (r,c) to be the row and column indices of square[1].
+ 
+
+In the Game class, the piece instance variable must have a new type.  What do you think it should be? Answer: Piece. The Game class shouldn't have to know about any specific implementation and should only work with the interface type.
+You'll need to modify the Game class so that it doesn't always make an LShape piece, but randomly chooses which shape to instantiate.  (I strongly recommend creating 1 new shape at a time and testing.)
+ROTATION: The current tetris piece needs to be able to rotate in quarter turns clockwise each time the down arrow key is pressed. As an example, see the figure below illustrating how the L-shaped piece rotates one full turn:
+ 
+
+
+We will take the convention that all pieces rotate about their square at index = 1 (except for the gray square shape that shouldn't rotate). That is, after a rotation, the square at index 1 should not have moved in the grid. All of the other squares of the piece will have moved clockwise by 90 degrees. The image below shows how the L shape piece rotates within the grid: notice that the square at index 1 stays at the same location.
+
+
+
+To implement the rotation feature in your code, do the following:
+
+Add the abstract method  void rotate(); to the Piece interface. 
+Implement the rotate()  method in AbstractPiece.  A piece should only rotate if the grid squares that it would pass through and occupy are all empty and in addition are all within the boundaries of the grid (i.e. the row index is greater than or equal to zero and less than Grid.HEIGHT and the column index is greater than or equal to zero and less than Grid.WIDTH). To check if a square can move, you can model its path as a square path about the square at index 1 (and not as an actual circular path, in which case the square could sweep through part of a square of the grid.)
+Add the  public method rotatePiece() to the Game class.  This method should be very similar to the movePiece() method except that it tells the piece to rotate.
+Add a new case to the keyPressed method in the EventController class to react to the down arrow key.
+If you look at the constructor for the LShape,  the (r, c) parameters define the position of  the middle square on the long side.  This is the square the shape is rotated around.   In all cases except for the square gray shape, the square to rotate around is the one established by the (r,c)  parameters. 
+Here's an example of the sort of thing that boundary checking on rotation should prevent:
+
+
+
+The other consideration when implementing this feature is "how to check if the rotate is legal?  Are the appropriate squares on the grid empty?"  As we've discussed in class, implementation is left as a developer's choice, but there are some guidelines you must follow:
+
+Notice that in the move() method of a piece, the piece queries the individual squares if they can move, and then tells them to move.  At no time does the shape ever query the Grid directly.  Implement rotate the same way.  Find out if the individual squares can move as needed, then move them.  You can do this with the existing Square class interface, or you can add more methods to its public interface.  We will say that a square can rotate if its destination square is free and if all of the squares along its rotation path while it rotates are also free.
+The gray square piece should never rotate. One approach would be to query the dynamic type of the piece being rotated in rotate of AbstractPiece and do nothing if it is the gray square piece. However, that would require an inelegant line of code using instanceof or getClass. An easier and cleaner approach is to override rotate in the class of the gray square piece and do nothing!
+Unit testing
+
+Add method(s) to the unit testing class that you developed in homework 1 to test the rotation of LShape and BarShape pieces. Write tests that check that the rotation goes as planned when it is allowed. Write also tests that check that no rotation is done when the piece can't rotate because of a lack of space. You may modify some of the existing classes to add methods that return the values of some of the instance fields to check them in your tests. For instance, you may implement a getSquareArray method in AbstractPiece that returns the array of squares of the piece.
+ 
+
+Diagram / Written report (should be typed and turned in as a pdf file with the java files on the class website)
+
+   Draw a class diagram of the inheritance graph of your shape classes. (You don't have to include Game, EventController, Tetris, Grid, or Square).  Use the UML style that we've drawn in class.  Make sure to show the class relationships as well as the class contents ( data, methods, etc).  You can draw by hand or use a computer drawing tool.  If  drawn by hand, make sure it is neat -- something just scribbled down quickly will not be adequate (include it in your report as an image).
+Write a short report that discusses your program and  issues you encountered while working on it.  Your report should cover
+Planning/Design: How did you design the classes for the 6 new pieces?  How did you design the rotate algorithms?
+Unit Testing: How did you test the rotation algorithm?  What sort of bugs did you encounter?  Are there any unresolved problems in the code?
+Evaluate this project.  What did you learn from it?  Was it worth the effort?  This could include things you learned about specifications,  inheritance, design issues, Java language issues, debugging, etc.
+ 
+Individual evaluation report (should be typed and turned in individually on Canvas)
+Evaluate this project:
+
+What did you learn from it? 
+Was it worth the effort?  
+Did you feel that all team members contributed equally to the project?
+ 
+
