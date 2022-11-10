@@ -14,7 +14,7 @@ public class SierpinskiTriangle extends AbstractShape {
      * @param x2 Maximum X coordinate
      * @param l Level of triangle
      */
-    public SierpinskiTriangle(int x1, int y1, int x2, int l) {
+    public SierpinskiTriangle(int x1, int y1, int x2, int l, Graphics g) {
 
         this.minX = x1;
         this.minY = y1;
@@ -25,15 +25,15 @@ public class SierpinskiTriangle extends AbstractShape {
         // multiply width by (sqrt3)/2 to get equilateral triangle
         this.triHeight = (int) (triWidth * .86);
         this.color = Color.GREEN;
-        int[] xPoints = new int[]{minX, triWidth / 2, maxX };
-        int[] yPoints = new int[]{minY + triHeight, minY, minY + triHeight};
-        Polygon triangle = new Polygon(xPoints, yPoints, 3);
 
-        this.draw(color);
+
+        this.draw(g);
     }
     @Override
     public void draw(Graphics g) {
-
+        int[] xPoints = new int[]{minX, triWidth / 2, maxX };
+        int[] yPoints = new int[]{minY + triHeight, minY, minY + triHeight};
+        Polygon triangle = new Polygon(xPoints, yPoints, 3);
     }
 
     /**
