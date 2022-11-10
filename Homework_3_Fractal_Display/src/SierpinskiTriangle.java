@@ -2,40 +2,60 @@ import java.awt.*;
 
 public class SierpinskiTriangle extends AbstractShape {
 
-    private final int CHILDCOUNT = 3;
-    private final int MAXLEVEL = 10;
-
+    public final int CHILDCOUNT = 3;
+    public final int MAXLEVEL = 10;
     private int triWidth;
     private int triHeight;
 
+    /**
+     *
+     * @param x1 Minimum X coordinate
+     * @param y1 Minimum Y coordinate
+     * @param x2 Maximum X coordinate
+     * @param l Level of triangle
+     */
+    public SierpinskiTriangle(int x1, int y1, int x2, int l) {
 
-    public SierpinskiTriangle(Point minCorner, Point maxCorner, Graphics g) {
+        this.minX = x1;
+        this.minY = y1;
+        this.maxX = x2;
+        this.level = l;
 
-        this.minCorner = minCorner;
-        this.maxCorner = maxCorner;
-        this.triWidth = maxCorner.x - minCorner.x;
+        this.triWidth = maxX - minX;
+        // multiply width by (sqrt3)/2 to get equilateral triangle
         this.triHeight = (int) (triWidth * .86);
+        this.color = Color.GREEN;
+        int[] xPoints = new int[]{minX, triWidth / 2, maxX };
+        int[] yPoints = new int[]{minY + triHeight, minY, minY + triHeight};
+        Polygon triangle = new Polygon(xPoints, yPoints, 3);
 
-        this.draw(g);
-
-        if (this.children[0] != null){
-
-        }
+        this.draw(color);
     }
     @Override
     public void draw(Graphics g) {
-        int[] xPoints = new int[]{minCorner.x, triWidth / 2, maxCorner.x };
-        int[] yPoints = new int[]{min};
-        Polygon triangle = new Polygon(xPoints, yPoints, 3);
-
 
     }
 
+    /**
+     * @return
+     */
     @Override
     public boolean addLevel() {
-        super.addLevel(CHILDCOUNT, this, )
-        return false;
+        return super.addLevel(this, CHILDCOUNT, MAXLEVEL);
     }
+
+    public void addChildren(){
+        int newLevel = level +1;
+        // bottom left
+        children[0] = new SierpinskiTriangle(minX,triHeight/2, triWidth/2, newLevel);
+        // bottom right
+        children[1] = new SierpinskiTriangle(minX + (triWidth/2), triHeight/2, maxX, newLevel);
+        // top center
+        children[2] = new SierpinskiTriangle(minX + (triWidth/4), minY, maxX - (triWidth/4), newLevel);
+
+    }
+
+
 
     @Override
     public boolean removeLevel() {

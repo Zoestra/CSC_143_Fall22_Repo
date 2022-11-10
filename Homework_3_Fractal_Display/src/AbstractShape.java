@@ -3,26 +3,37 @@ import java.awt.*;
 public abstract class AbstractShape implements Shape {
 
     protected int level;
-
+    public int CHILDCOUNT;
+    public int MAXLEVEL;
     protected AbstractShape[] children;
     protected Color color;
 
 
     // these define the available draw area
-    protected Point minCorner;
-    protected Point maxCorner;
+    protected int minX;
+    protected int minY;
+    protected int maxX;
 
-    public boolean addChildren(int childCount, int maxLevel, AbstractShape parent) {
-        if (maxLevel >= level) {
-            return false;
-        }
-        else {
-            for (int i = 0; i < childCount; i++) {
+    public abstract void addChildren() ;
+
+    public  boolean addLevel(AbstractShape shape, int CHILDCOUNT, int MAXLEVEL){
+
+        for (int i = 0; i < CHILDCOUNT; i++) {
+            if (shape.children[i] != null){
+                if (shape.children[i].level > MAXLEVEL){
+                    return false;
+                }
+                addLevel(shape.children[i], CHILDCOUNT, MAXLEVEL);
             }
-        }
-    }
+            else shape.addChildren();
 
+            }
+
+        return true;
+        }
 }
+
+
 
 
 

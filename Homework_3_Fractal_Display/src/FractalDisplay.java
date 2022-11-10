@@ -57,7 +57,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 
     // Use a popup menu to display information
     // the total number of shapes in the current shape
-    // -> triggered by a right click of the the mouse.
+    // -> triggered by a right click of the mouse.
     private JPopupMenu popup;
     private JLabel popupLabel;
 
@@ -159,7 +159,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
                     // TODO
                     // Call your SierpinskiTriangle constructor here
                     // replace shape = null with shape = new SierpinskiTriangle(...)
-                    shape = new SierpinskiTriangle(new Point(0,0), new Point(800,800), this.g);
+                    shape = new SierpinskiTriangle(new Point(0,0), new Point(800,800));
                     break;
                 case H_SHAPE:
                     // TODO
