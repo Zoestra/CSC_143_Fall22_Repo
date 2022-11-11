@@ -25,7 +25,8 @@ public abstract class AbstractShape implements Shape {
                     return false;
                 }
                 addLevel(shape.children[i], CHILDCOUNT, MAXLEVEL);
-            } else shape.addChildren();
+            }
+            else shape.addChildren();
 
         }
 
@@ -87,7 +88,7 @@ public abstract class AbstractShape implements Shape {
                             return Color.decode("#8C1E03");
                         case 4: // Rust
                             return Color.decode("#A63C06");
-                        case 5: // Windsor Tan
+                        case 5: // Windsor TanS
                             return Color.decode("#B55608");
                         case 6: // Ochre
                             return Color.decode("#C36F09");

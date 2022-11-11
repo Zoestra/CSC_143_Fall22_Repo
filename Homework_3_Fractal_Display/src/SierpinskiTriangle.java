@@ -6,6 +6,7 @@ public class SierpinskiTriangle extends AbstractShape {
     public final int MAXLEVEL = 10;
     private int triWidth;
     private int triHeight;
+    private Polygon triangle;
 
     /**
      *
@@ -30,12 +31,12 @@ public class SierpinskiTriangle extends AbstractShape {
         int[] xPoints = new int[]{minX, triWidth / 2, maxX };
         int[] yPoints = new int[]{minY + triHeight, minY, minY + triHeight};
 
-        Polygon triangle = new Polygon(xPoints, yPoints, 3);
+        this.triangle = new Polygon(xPoints, yPoints, 3);
 
-        this.draw(g);
     }
     @Override
     public void draw(Graphics g) {
+        this.triangle
 
     }
 
