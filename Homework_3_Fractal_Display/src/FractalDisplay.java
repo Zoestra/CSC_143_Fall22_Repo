@@ -159,7 +159,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
                     // TODO
                     // Call your SierpinskiTriangle constructor here
                     // replace shape = null with shape = new SierpinskiTriangle(...)
-                    shape = new SierpinskiTriangle(0,0,800,1, frame);
+                    shape = new SierpinskiTriangle(0,0,800,1);
                     break;
                 case H_SHAPE:
                     // TODO
