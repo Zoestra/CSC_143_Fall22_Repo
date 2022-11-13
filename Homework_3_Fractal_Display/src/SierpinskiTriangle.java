@@ -32,12 +32,24 @@ public class SierpinskiTriangle extends AbstractShape {
         int[] yPoints = new int[]{minY + triHeight, minY, minY + triHeight};
 
         this.triangle = new Polygon(xPoints, yPoints, 3);
+    }
+
+    public SierpinskiTriangle(AbstractShape par, int pos){
+
+        int position = pos;
+        AbstractShape parent =
+
+        switch position
 
     }
     @Override
     public void draw(Graphics g) {
-        this.triangle
-
+        g.drawPolygon(this.triangle);
+        if (this.children != null) {
+            for (AbstractShape child : children) {
+                child.draw(g);
+            }
+        }
     }
 
     /**
@@ -49,9 +61,11 @@ public class SierpinskiTriangle extends AbstractShape {
     }
 
     public void addChildren(){
-        int newLevel = level +1;
+        int newLevel = level + 1;
+        this.children = new AbstractShape[3];
+
         // bottom left
-        children[0] = new SierpinskiTriangle(minX,triHeight/2, triWidth/2, newLevel);
+        children[0] = new SierpinskiTriangle(minX,triHeight/2, (triWidth/2), newLevel);
         // bottom right
         children[1] = new SierpinskiTriangle(minX + (triWidth/2), triHeight/2, maxX, newLevel);
         // top center

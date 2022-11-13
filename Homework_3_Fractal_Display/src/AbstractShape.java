@@ -7,6 +7,7 @@ public abstract class AbstractShape implements Shape {
     public int CHILDCOUNT;
     public int MAXLEVEL;
     protected AbstractShape[] children;
+    protected AbstractShape parent;
     protected Color color;
 
 
@@ -18,18 +19,18 @@ public abstract class AbstractShape implements Shape {
     public abstract void addChildren();
 
     public boolean addLevel(AbstractShape shape, int CHILDCOUNT, int MAXLEVEL) {
-
-        for (int i = 0; i < CHILDCOUNT; i++) {
-            if (shape.children[i] != null) {
-                if (shape.children[i].level > MAXLEVEL) {
-                    return false;
+        if (shape.children != null) {
+            for (int i = 0; i < CHILDCOUNT; i++) {
+                if (shape.children[i] != null) {
+                    if (shape.children[i].level > MAXLEVEL) {
+                        return false;
+                    }
+                    addLevel(shape.children[i], CHILDCOUNT, MAXLEVEL);
                 }
-                addLevel(shape.children[i], CHILDCOUNT, MAXLEVEL);
+
             }
-            else shape.addChildren();
-
         }
-
+        else shape.addChildren();
         return true;
     }
 

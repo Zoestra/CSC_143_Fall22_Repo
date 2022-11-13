@@ -39,6 +39,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
     public static final int H_SHAPE = 1;
     public static final int MY_SHAPE = 2;
 
+
     private JFrame frame;
 
     // Other elements in the window
