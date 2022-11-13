@@ -25,8 +25,13 @@ public class HShape extends AbstractShape{
 
     }
 
-    @Override
-    public void addChildren() {
 
+    /**
+     * @param shape
+     * @return
+     */
+    @Override
+    public boolean createChildren(AbstractShape shape) {
+        return false;
     }
 }

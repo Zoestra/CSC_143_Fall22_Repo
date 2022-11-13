@@ -15,22 +15,28 @@ public abstract class AbstractShape implements Shape {
     protected int minX;
     protected int minY;
     protected int maxX;
+    protected int width;
+    protected int height;
 
-    public abstract void addChildren();
+    public abstract boolean createChildren(AbstractShape shape);
 
-    public boolean addLevel(AbstractShape shape, int CHILDCOUNT, int MAXLEVEL) {
-        if (shape.children != null) {
-            for (int i = 0; i < CHILDCOUNT; i++) {
-                if (shape.children[i] != null) {
-                    if (shape.children[i].level > MAXLEVEL) {
-                        return false;
-                    }
-                    addLevel(shape.children[i], CHILDCOUNT, MAXLEVEL);
-                }
 
-            }
+    public boolean addLevel(AbstractShape shape, int max){
+        System.out.print("\nAdding Level............");
+        if (shape.level >= shape.MAXLEVEL){
+            System.out.println("Failed, level would exceed maximum of " + shape.MAXLEVEL);
+            return false;
         }
-        else shape.addChildren();
+
+        if (shape.createChildren(shape)){
+            System.out.println("Level added successfully");
+            return true;
+        }
+
+        System.out.println("Level full, advancing to layer" + shape.children[0].level);
+        for ( AbstractShape child : children ) {
+            addLevel(child, max);
+        }
         return true;
     }
 
@@ -39,18 +45,13 @@ public abstract class AbstractShape implements Shape {
      * Palettes generated on coolers.co
      *
      * @param palette selects palette to use
-     * @param level   alternate palette selector
+     * @param level determines color for sequenced case
      * @return returns a Color object
      */
     public Color randColor(int palette, int level) {
 
-        Random r = new Random();
-        int rand = r.nextInt(5) + 1;
-
-        int sequence = level;
-        if (level > 10) {
-            sequence = level % 10;
-        }
+        Random r =      new Random();
+        int rand =      r.nextInt(5) + 1;
 
         switch (palette) {
             case 1: // palette for sierpinsky triangle
@@ -79,30 +80,30 @@ public abstract class AbstractShape implements Shape {
                     case 5: // Radical Red
                         return Color.decode("#FF3562");
                 }
-                case 3: // palette for MyShape
-                    switch (sequence) {
-                        case 1: // Rosewood
-                            return Color.decode("#520000");
-                        case 2: // Blood Red
-                            return Color.decode("#710000");
-                        case 3: // Kobe
-                            return Color.decode("#8C1E03");
-                        case 4: // Rust
-                            return Color.decode("#A63C06");
-                        case 5: // Windsor TanS
-                            return Color.decode("#B55608");
-                        case 6: // Ochre
-                            return Color.decode("#C36F09");
-                        case 7: // Harvest Gold
-                            return Color.decode("#D9950A");
-                        case 8: // Orange Yellow
-                            return Color.decode("#EEBA0B");
-                        case 9: // Yellow Munsell
-                            return Color.decode("#F1CF0A");
-                        case 0: // Titanium Yellow
-                            return Color.decode("#F4E409");
-                    }
+            case 3: // palette for MyShape
+                switch (level) {
+                    case 1: // Rosewood
+                        return Color.decode("#520000");
+                    case 2: // Blood Red
+                        return Color.decode("#710000");
+                    case 3: // Kobe
+                        return Color.decode("#8C1E03");
+                    case 4: // Rust
+                        return Color.decode("#A63C06");
+                    case 5: // Windsor TanS
+                        return Color.decode("#B55608");
+                    case 6: // Ochre
+                        return Color.decode("#C36F09");
+                    case 7: // Harvest Gold
+                        return Color.decode("#D9950A");
+                    case 8: // Orange Yellow
+                        return Color.decode("#EEBA0B");
+                    case 9: // Yellow Munsell
+                        return Color.decode("#F1CF0A");
+                    case 0: // Titanium Yellow
+                        return Color.decode("#F4E409");
                 }
+            }
         return Color.BLACK;
     }
 }
