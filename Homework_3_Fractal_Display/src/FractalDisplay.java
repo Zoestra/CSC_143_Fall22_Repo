@@ -40,18 +40,19 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
     public static final int MY_SHAPE = 2;
 
 
-    private JFrame frame;
+    private final JFrame frame;
 
     // Other elements in the window
     // Radio buttons (with their titles)
-    private String[] titles;
-    private JRadioButton[] radioButtons;
+    private final String[] titles;
+    private final JRadioButton[] radioButtons;
 
     // The button to add/remove levels
-    private JButton addLevel, removeLevel;
+    private final JButton addLevel;
+    private final JButton removeLevel;
 
     // Slider to change the display (extra-credit feature)
-    private JSlider slider;
+    private final JSlider slider;
 
     // Current shape
     private Shape shape;
@@ -59,8 +60,8 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
     // Use a popup menu to display information
     // the total number of shapes in the current shape
     // -> triggered by a right click of the mouse.
-    private JPopupMenu popup;
-    private JLabel popupLabel;
+    private final JPopupMenu popup;
+    private final JLabel popupLabel;
 
     /**
      * Constructs a FractalDisplay to display fractal shapes
@@ -166,7 +167,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
                     // TODO
                     // Call your HShape constructor here
                     // Replace shape = null with shape = new HShape(...))
-                    shape = null;
+                    shape = new HShape();
                     break;
                 case MY_SHAPE:
                     // TODO

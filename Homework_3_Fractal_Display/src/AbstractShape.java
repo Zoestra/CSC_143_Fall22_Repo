@@ -3,74 +3,87 @@ import java.util.Random;
 
 public abstract class AbstractShape implements Shape {
 
-    protected int level;
+
     public int CHILDCOUNT;
     public int MAXLEVEL;
-    protected AbstractShape[] children;
-    protected AbstractShape parent;
     protected Color color;
-
-    public abstract String idBuilder();
-
-    protected int position;
-
+    protected AbstractShape[] children      = null;
+    protected AbstractShape parent          = null;
+    protected int position                  = 0;
+    protected int level                     = 1;
     // these define the available draw area
-    protected int minX;
-    protected int minY;
-    protected int maxX;
-    protected int width;
-    protected int height;
+    protected int minX                      = 0;
+    protected int minY                      = 0;
+    protected int maxX                      = FractalDisplay.WIDTH;
+    protected int width                     = FractalDisplay.WIDTH;
+    protected int height                    = FractalDisplay.HEIGHT;
+
+
+    public abstract String PRINT_LOGS(int c);
+    protected final boolean PRINT_LOGS_FLAG = true;
+
 
     public abstract void createChildren();
 
-
-    public boolean addLevel(){
+    /**
+     * Recursively adds a fractal layer to the displayed shape.
+     * If the shape has children, add a level to each child. If the shape doesn't have children, create them
+     * @return Returns false when max level is exceeded.
+     */
+        public boolean addLevel(){
         AbstractShape shape = this;
 
-        System.out.print("\nAdd Level from: " + shape.idBuilder());
+        //System.out.print("\nAdd Level from: " + shape.idBuilder());
 
         if (shape.level >= shape.MAXLEVEL){
-            System.out.println("Failed, level would exceed maximum of " + shape.MAXLEVEL);
+            //System.out.println("Failed, level would exceed maximum of " + shape.MAXLEVEL);
             return false;
         }
 
         if (shape.children != null) {
-            System.out.println("Level full, advancing to layer" + shape.children[0].level);
             for (AbstractShape child: shape.children) {
                 child.addLevel();
             }
         }
         else shape.createChildren();
-        System.out.println("Level added successfully");
         return true;
     }
 
-    public boolean removeLevel(){
-//        AbstractShape shape = this;
-//
-//        if (shape.level <= 1){
-//            System.out.println("Failed, only one layer exists");
-//            return false;
-//        }
-//
-//        if (shape.children != null) {
-//            for (AbstractShape child: shape.children) {
-//                child.removeLevel();
-//            }
-//        }
-//        else shape.createChildren();
-//        System.out.println("Level added successfully");
-//        return true;
-//
-        return false;
-    }
+
     /**
-     * Generates random color or sequenced color
-     * Palettes generated on coolers.co
+     * If the shape has children, call removeLevel() on each child. If the shape has no children, set the parent's children
+     * to null
      *
-     * @param palette selects palette to use
-     * @param level determines color for sequenced case
-     * @return returns a Color object
+     * @return returns false if only one layer exists
+     */
+    public boolean removeLevel(){
+        AbstractShape shape = this;
+
+        if (shape.level == 1 && shape.children == null){
+            System.out.println("Failed, only one layer exists");
+            return false;
+        }
+
+        if (shape.children != null) {
+            for (AbstractShape child: shape.children) {
+                child.removeLevel();
+            }
+        }
+        else
+            this.parent.children = null;
+
+
+        System.out.println("Level added successfully");
+        return true;
+
+    }
+
+    /**
+     * This function takes in a palette number and a level number and returns a random color from the palette
+     *
+     * @param palette 1 = sierpinsky triangle, 2 = H Shape, 3 = MyShape
+     * @param level the level of recursion
+     * @return A random color from a palette of colors.
      */
     public Color randColor(int palette, int level) {
 
@@ -128,17 +141,7 @@ public abstract class AbstractShape implements Shape {
                         return Color.decode("#F4E409");
                 }
             }
-        return Color.BLACK;
+        return Color.WHITE;
     }
 }
 
-
-
-
-
-// The fields may be initialized by the AbstractShape constructor with the values
-// received from the super() calls in the constructors of the concrete shape classes.
-// For instance, the SierpinskiTriangle constructor may call the AbstractShape constructor with
-// the max level value of 10 and a children array length of 3
-// Alternatively the fields may be initialized in the concrete class constructors (they are visible by
-// the concrete classes since they are declared protected)
