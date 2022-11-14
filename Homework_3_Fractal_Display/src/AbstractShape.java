@@ -10,6 +10,9 @@ public abstract class AbstractShape implements Shape {
     protected AbstractShape parent;
     protected Color color;
 
+    public abstract String idBuilder();
+
+    protected int position;
 
     // these define the available draw area
     protected int minX;
@@ -18,28 +21,49 @@ public abstract class AbstractShape implements Shape {
     protected int width;
     protected int height;
 
-    public abstract boolean createChildren(AbstractShape shape);
+    public abstract void createChildren();
 
 
-    public boolean addLevel(AbstractShape shape, int max){
-        System.out.print("\nAdding Level............");
+    public boolean addLevel(){
+        AbstractShape shape = this;
+
+        System.out.print("\nAdd Level from: " + shape.idBuilder());
+
         if (shape.level >= shape.MAXLEVEL){
             System.out.println("Failed, level would exceed maximum of " + shape.MAXLEVEL);
             return false;
         }
 
-        if (shape.createChildren(shape)){
-            System.out.println("Level added successfully");
-            return true;
+        if (shape.children != null) {
+            System.out.println("Level full, advancing to layer" + shape.children[0].level);
+            for (AbstractShape child: shape.children) {
+                child.addLevel();
+            }
         }
-
-        System.out.println("Level full, advancing to layer" + shape.children[0].level);
-        for ( AbstractShape child : children ) {
-            addLevel(child, max);
-        }
+        else shape.createChildren();
+        System.out.println("Level added successfully");
         return true;
     }
 
+    public boolean removeLevel(){
+//        AbstractShape shape = this;
+//
+//        if (shape.level <= 1){
+//            System.out.println("Failed, only one layer exists");
+//            return false;
+//        }
+//
+//        if (shape.children != null) {
+//            for (AbstractShape child: shape.children) {
+//                child.removeLevel();
+//            }
+//        }
+//        else shape.createChildren();
+//        System.out.println("Level added successfully");
+//        return true;
+//
+        return false;
+    }
     /**
      * Generates random color or sequenced color
      * Palettes generated on coolers.co

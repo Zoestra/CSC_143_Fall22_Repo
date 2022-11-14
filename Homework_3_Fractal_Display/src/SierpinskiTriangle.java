@@ -9,7 +9,6 @@ public class SierpinskiTriangle extends AbstractShape {
 
     private Polygon triangle;
 
-
     public SierpinskiTriangle(){
 
 
@@ -17,15 +16,16 @@ public class SierpinskiTriangle extends AbstractShape {
         this.maxX   =   FractalDisplay.WIDTH;
         this.minY   =   0;
         this.level  =   1;
-
-        this.setter();
+        this.position = 0;
+        this.parent = null;
+        this.init();
     }
 
     public SierpinskiTriangle(AbstractShape par, int pos){
 
 
-        int position = pos;
-        AbstractShape parent = par;
+        this.position = pos;
+        this.parent = par;
         int x1 =        0;
         int x2 =        0;
         int  y =        0;
@@ -48,13 +48,15 @@ public class SierpinskiTriangle extends AbstractShape {
             }
         }
 
-        this.minX =     x1;
-        this.maxX =     x2;
-        this.minY =     y;
+        this.minX  =     x1;
+        this.maxX  =     x2;
+        this.minY  =     y;
 
-        this.level = parent.level +1;
+        this.level = this.parent.level +1;
 
-        this.setter();
+        this.init();
+
+
     }
 
     private void createTriangle(){
@@ -75,7 +77,7 @@ public class SierpinskiTriangle extends AbstractShape {
         }
     }
 
-    private void setter(){
+    private void init(){
 
         this.CHILDCOUNT = 3;
         this.MAXLEVEL   = 10;
@@ -88,38 +90,24 @@ public class SierpinskiTriangle extends AbstractShape {
 
         this.createTriangle();
 
-        System.out.println("New Sierpinsky Triangle Created");
-        System.out.println("Level        = " + level + " / " + MAXLEVEL );
-        System.out.println("ChildCount   = " + CHILDCOUNT);
-        System.out.println("Color        = " + color);
-        System.out.println("Width        = " + width);
-        System.out.println("Height       = " + height);
-        System.out.println("Bounding Box = (" + minX + ", " + minY + "), (" + maxX + ", " + (minY + height ) + ")");
-
     }
     /**
      * Passes self through to super.
      * @return Returns result of super method.
      */
-    @Override
-    public boolean addLevel() {
-        return super.addLevel(this, this.MAXLEVEL);
-    }
+//    @Override
+//    public boolean addLevel() {
+//        return super.addLevel();
+//    }
 
-    public boolean createChildren(@NotNull AbstractShape shape){
+    public void createChildren(){
         System.out.print("\nCreating children........");
-
-        if (shape.children != null) {
-            System.out.println("Failed to create children, they already exist");
-            return false;
-        }
-        shape.children = new AbstractShape[]{
-                new SierpinskiTriangle(shape, 1),
-                new SierpinskiTriangle(shape, 2),
-                new SierpinskiTriangle(shape, 3)
+        this.children = new AbstractShape[]{
+                new SierpinskiTriangle(this, 1),
+                new SierpinskiTriangle(this, 2),
+                new SierpinskiTriangle(this, 3)
                 };
         System.out.println("Complete");
-        return true;
     }
 
 
@@ -137,6 +125,18 @@ public class SierpinskiTriangle extends AbstractShape {
     @Override
     public void update(int value) {
 
+    }
+
+    public String idBuilder(){
+        StringBuilder build = new StringBuilder();
+        build.append("Level: ").append(this.level).append(",");
+        build.append(" Position: ").append(this.position).append(", ");
+        if (this.parent != null){
+            build.append("Parent Position: ").append(this.parent.position);
+        }
+
+
+        return build.toString();
     }
 
 }
