@@ -5,97 +5,84 @@ import java.awt.*;
  */
 public class HShape extends AbstractShape implements Shape{
 
-        private Rectangle rectangle;
+        private Polygon   square;
+        private Polygon[] gaps;
+        private int third = width / 3;
+        private int[] gridX =  {minX, (minX + third), (maxX - third)  , maxX};
+        private int[] gridY =  {minY, (minY + third), (height - third), (minY + height)};
 
         public HShape(){
-                this.CHILDCOUNT = 9;
-                this.MAXLEVEL = 4;
-                this.color = randColor(2, 0);
-                this.children = new AbstractShape[9];
-                this.createChildren();
-                this.level = 0;
 
+                level = 0;
+                square = createSquare();
+                color = Color.WHITE;
+                init();
+                createChildren();
         }
 
+        private HShape(AbstractShape parent, int position){
+
+                this.parent = parent;
+                level = parent.level + 1;
+                init();
+        }
+
+        /**
+         * This function initializes the variables of the class
+         */
+        public void init(){
+                CHILDCOUNT = 7;
+                MAXLEVEL = 4;
+                children = null;
+
+        }
         /**
          * > For each of the 9 children, set the color, level, parent, and boundaries
          */
         @Override
         public void createChildren() {
-                color = randColor(2, 0);
+                Color color = randColor(1, 1);
 
-                int n = this.width / 3;
+                for (int i = 0; i < 9; i++){
 
-                int x0                      = this.minX;
-                int x1                      = x0 + n;
-                int x2                      = this.maxX - n;
-                int x3                      = this.maxX;
-
-                int y0                      = this.minY;
-                int y1                      = y0 + n;
-                int y2                      = this.height - n;
-                int y3                      = this.minY + this.height;
-
-                for (int i                  = 0; i < 9; i++){
-                        HShape shape                = new HShape();
-                        this.children[i]            = shape;
+                        HShape shape                = new HShape(this, i);
+                        children[i]                 = shape;
                         shape.position              = i;
                         shape.color                 = color;
-                        shape.level                 = this.level + 1;
-                        shape.parent                = this;
-
-                        Point minBoundary           = null;
-                        Point maxBoundary           = null;
-
-                        switch (i){
-                                case 0:                                     // top left
-                                        minBoundary = new Point(x0   , y0);
-                                        maxBoundary = new Point(x1   , y1);
-                                        break;
-                                case 1: // top center -- gap
-                                        minBoundary = new Point(x1, y0);
-                                        maxBoundary = new Point(x2, y1);
-                                        shape.color = Color.WHITE;
-                                        break;
-                                case 2: // top right
-                                        minBoundary = new Point(x2, y0);
-                                        maxBoundary = new Point(x3, y1);
-                                        break;
-                                case 3: // center left
-                                        minBoundary = new Point(x0, y1);
-                                        maxBoundary = new Point(x1, y2);
-                                        break;
-                                case 4: // center
-                                        minBoundary = new Point(x1, y1);
-                                        maxBoundary = new Point(x2, y2);
-                                        break;
-                                case 5: // center right
-                                        minBoundary = new Point(x2, y1);
-                                        maxBoundary = new Point(x3, y2);
-                                        break;
-                                case 6: // bottom left
-                                        minBoundary = new Point(x0, y2);
-                                        maxBoundary = new Point(x1, y3);
-                                        break;
-                                case 7: // bottom center -- gap
-                                        minBoundary = new Point(x1, y2);
-                                        maxBoundary = new Point(x2, y3);
-                                        break;
-                                case 8: // bottom right
-                                        minBoundary = new Point(x2  , y2);
-                                        maxBoundary = new Point(x3  , y3);
-                                        break;
-                        }
-                        shape.minX      = minBoundary.x;
-                        shape.minY      = minBoundary.y;
-                        shape.maxX      = maxBoundary.x;
-                        shape.width     = maxBoundary.x - minBoundary.x;
+                        int[] coords    = this.getCoords(i);
+                        shape.minX      = coords[0];
+                        shape.minY      = coords[1];
+                        shape.maxX      = coords[2];
+                        shape.width     = coords[2] - coords[0];
                         shape.height    = shape.width;
 
-                        shape.rectangle = new Rectangle(shape.minX, shape.minY, shape.width, shape.height);
+                        shape.square    = createSquare();
                 }
 
         }
+
+        private Polygon createSquare(){
+
+                return new Polygon(new int[] {this.minX, this.maxX, this.maxX, this.minX},
+                                   new int[] {this.minY, this.minY, this.minY + this.height, this.minY + this.height },
+                                4);
+
+        }
+//
+//        private Polygon[] createGaps(){
+//
+//                int[][] xPoints = new int[][] {{}};
+//        }
+        /**
+         * overrides the addLevel() function in the superclass.
+         *
+         * @return returns false if super.addLevel fails
+         */
+        @Override
+        public boolean addLevel(){
+               return super.addLevel();
+        }
+
 
         /**
          * This function draws the object on the screen.
@@ -104,10 +91,14 @@ public class HShape extends AbstractShape implements Shape{
          */
         @Override
         public void draw(Graphics g) {
+                g.drawPolygon(this.square);
+                g.setColor(this.color);
+                g.fillPolygon(this.square);
+
+
                 if (this.children[0] != null) {
-                        for (AbstractShape child : this.children) {
-
-
+                        for (AbstractShape child : children) {
+                                child.draw(g);
                         }
                 }
         }
@@ -117,6 +108,42 @@ public class HShape extends AbstractShape implements Shape{
                 return 0;
         }
 
+        private int[] getCoords(int pos) {
+
+                int[] coords = null;
+                // sets the boundaries of the children of the HShape.
+                switch (pos) {
+                        case 0:// top left
+                                coords = new int[] {gridX[0], gridY[0], gridX[1], gridY[1]};
+                                break;
+                        case 1: // top center -- gap
+                                coords = new int[] {gridX[1], gridY[0], gridX[2], gridY[1]};
+                                break;
+                        case 2: // top right
+
+                                coords = new int[] {gridX[2], gridY[0], gridX[3], gridY[1]};
+                                break;
+                        case 3: // center left
+                                coords = new int[] {gridX[0], gridY[1], gridX[1], gridY[2]};
+                                break;
+                        case 4: // center
+                                coords = new int[] {gridX[1], gridY[1], gridX[2], gridY[2]};
+                                break;
+                        case 5: // center right
+                                coords = new int[] {gridX[2], gridY[1], gridX[3], gridY[2]};
+                                break;
+                        case 6: // bottom left
+                                coords = new int[] {gridX[0], gridY[2], gridX[1], gridY[3]};
+                                break;
+                        case 7: // bottom center -- gap
+                                coords = new int[] {gridX[1], gridY[2], gridX[2], gridY[3]};
+                                break;
+                        case 8: // bottom right
+                                coords = new int[] {gridX[2], gridY[2], gridX[3], gridY[3]};
+                                break;
+                }
+                return coords;
+        }
         @Override
         public void update(int value) {
 

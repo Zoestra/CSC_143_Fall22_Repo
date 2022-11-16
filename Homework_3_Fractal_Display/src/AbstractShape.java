@@ -28,9 +28,10 @@ public abstract class AbstractShape implements Shape {
     /**
      * Recursively adds a fractal layer to the displayed shape.
      * If the shape has children, add a level to each child. If the shape doesn't have children, create them
+     *
      * @return Returns false when max level is exceeded.
      */
-        public boolean addLevel(){
+    public boolean addLevel(){
         AbstractShape shape = this;
 
         //System.out.print("\nAdd Level from: " + shape.idBuilder());
@@ -40,7 +41,7 @@ public abstract class AbstractShape implements Shape {
             return false;
         }
 
-        if (shape.children != null) {
+        if (shape.children != null ) {
             for (AbstractShape child: shape.children) {
                 child.addLevel();
             }
@@ -51,8 +52,8 @@ public abstract class AbstractShape implements Shape {
 
 
     /**
-     * If the shape has children, call removeLevel() on each child. If the shape has no children, set the parent's children
-     * to null
+     * If the shape has children, call removeLevel() on each child. If the shape has no children,
+     * set the parent's children to null
      *
      * @return returns false if only one layer exists
      */
@@ -103,20 +104,35 @@ public abstract class AbstractShape implements Shape {
                         return Color.decode("#F4D35E");
                     case 5: // Coral
                         return Color.decode("#F78764");
+
                 }
-            case 2: // palette for H Shape
+            case 2: // palette for sierpinsky triangle
                 switch (rand) {
-                    case 1: // Space Cadet
+                    case 1: // Indigo Dye
                         return Color.decode("#1B1B3A");
-                    case 2: // Palatinate Purple
+                    case 2: // Russian Green
                         return Color.decode("#693668");
-                    case 3: // Maximum Red Purple
+                    case 3: // Cerise
                         return Color.decode("#A74482");
-                    case 4: // Magenta
+                    case 4: // Orange Yellow
                         return Color.decode("#F84AA7");
-                    case 5: // Radical Red
+                    case 5: // Coral
                         return Color.decode("#FF3562");
+
                 }
+//            case 2: // palette for H Shape
+//                switch (rand) {
+//                    case 1: // Space Cadet
+//                        return Color.decode("#1B1B3A");
+//                    case 2: // Palatinate Purple
+//                        return Color.decode("#693668");
+//                    case 3: // Maximum Red Purple
+//                        return Color.decode("#A74482");
+//                    case 4: // Magenta
+//                        return Color.decode("#F84AA7");
+//                    case 5: // Radical Red
+//                        return Color.decode("#FF3562");
+//                }
             case 3: // palette for MyShape
                 switch (level) {
                     case 1: // Rosewood

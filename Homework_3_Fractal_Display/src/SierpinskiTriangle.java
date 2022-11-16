@@ -14,7 +14,7 @@ public class SierpinskiTriangle extends AbstractShape {
      */
     public SierpinskiTriangle(){
 
-        this.init();
+        init();
     }
 
     /**
@@ -29,8 +29,8 @@ public class SierpinskiTriangle extends AbstractShape {
     private SierpinskiTriangle(AbstractShape par, int pos){
 
 
-        this.position = pos;
-        this.parent = par;
+        position = pos;
+        parent = par;
         int x1 =        0;
         int x2 =        0;
         int  y =        0;
@@ -71,7 +71,7 @@ public class SierpinskiTriangle extends AbstractShape {
     private void init(){
         this.CHILDCOUNT = 3;
         this.MAXLEVEL   = 10;
-        this.color      = randColor(1                  , level);
+        this.color      = randColor(1, level);
         this.children   = null;
 
         this.width      = maxX - minX;
