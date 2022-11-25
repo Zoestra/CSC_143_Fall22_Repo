@@ -36,8 +36,10 @@ public class HShape extends AbstractShape implements Shape{
                 children = null;
 
         }
+
         /**
-         * > For each of the 9 children, set the color, level, parent, and boundaries
+         * > Create a new HShape object for each of the 9 positions in the grid, and set the position, color, and
+         * coordinates of each shape
          */
         @Override
         public void createChildren() {
