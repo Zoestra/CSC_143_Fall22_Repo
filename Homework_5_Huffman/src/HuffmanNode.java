@@ -5,7 +5,7 @@ public class HuffmanNode {
 	private int location;
 	private HuffmanNode[] childrenNodes;
 	
-	HuffmanNode(Integer ASCIIVal, int frequency, int location, HuffmanNode[] childrenNodes) {
+	HuffmanNode(Integer ASCIIVal, int frequency, Integer location, HuffmanNode[] childrenNodes) {
 		this.ASCIIVal = ASCIIVal; // Nullable, for nodes representing frequency sums
 		this.frequency = frequency;
 		this.location = location;

@@ -11,7 +11,7 @@ public class HuffmanTree {
 		for (int charIndex = 0; charIndex < count.length; charIndex++) { // TODO: Change to merge sort
 			for(int j = charIndex; j < count.length - charIndex; j++) {
 				if (count[charIndex] >= count[j]) {
-					charFrequencyNodes.add(new HuffmanNode(charIndex, count[charIndex], null));	
+					charFrequencyNodes.add(new HuffmanNode(charIndex, count[charIndex], null, null));	
 				}
 			}
 		}
@@ -20,13 +20,13 @@ public class HuffmanTree {
 		for (int charIndex = 0; charIndex < charFrequencyNodes.size(); charIndex += 2) {
 			int sumFrequency = charFrequencyNodes.get(charIndex).getFrequency() + charFrequencyNodes.get(charIndex + 1).getFrequency();
 			HuffmanNode[] sumFrequencyChildren = new HuffmanNode[] { charFrequencyNodes.get(charIndex), charFrequencyNodes.get(charIndex + 1) };
-			HuffmanNode sumNode = new HuffmanNode(null, sumFrequency, sumFrequencyChildren);
+			HuffmanNode sumNode = new HuffmanNode(null, sumFrequency, null, sumFrequencyChildren);
 		}
 	}
 	
-	private HuffmanNode[] createBinaryTree(HuffmanNode[] charFrequencyNodes) {
-		// Base case: there are no more
-	}
+	//private HuffmanNode[] createBinaryTree(HuffmanNode[] charFrequencyNodes) {
+	//	// Base case: there are no more
+	//}
 	
 	public void write(PrintStream output) {
 		
