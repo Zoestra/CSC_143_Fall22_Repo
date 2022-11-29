@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d553198e-915d-4ce2-b119-08566c07d8fe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/.idea/libraries/adventurestub.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/AdvCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/AdvMotionCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/AdvMotionTableEntry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/AdvObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/AdvRoom.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/Adventure.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/AdventureTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/CrowtherObjects.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/CrowtherRooms.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/CrowtherSynonyms.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/CrowtherTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/Homework_4_Adventure_Game.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/SmallObjects.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/SmallRooms.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/SmallSynonyms.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/SmallTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/TinyRooms.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/adventurestub.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Homework_4_Adventure_Game/hw4 (3).doc" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2I40c3qyK1G9adHTDEBptuAZPnk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "Z:/Datafort_Z/20.00 - School/22.00 - Programming/22.04 - CSC_143_Fall22/CSC_143_Fall22_Repo/adventurestub.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MTConfigurable"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d553198e-915d-4ce2-b119-08566c07d8fe" name="Changes" comment="" />
+      <created>1669425623838</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1669425623838</updated>
+      <workItem from="1669425625020" duration="1743000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

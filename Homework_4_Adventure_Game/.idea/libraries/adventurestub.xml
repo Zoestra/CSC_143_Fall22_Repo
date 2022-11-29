@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="adventurestub">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/adventurestub.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

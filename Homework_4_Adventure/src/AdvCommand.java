@@ -29,7 +29,6 @@ public abstract class AdvCommand {
 	public static final AdvCommand TAKE = new TakeCommand();
 
 	/** The predefined entry for the DROP command */
-	// Creating a new instance of the DropCommand class and assigning it to the DROP variable.
 	public static final AdvCommand DROP = new DropCommand();
 
 	/* Abstract method: execute(game, obj) */
