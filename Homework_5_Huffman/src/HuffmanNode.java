@@ -2,10 +2,10 @@
 public class HuffmanNode {
 	private int ASCIIVal;
 	private int frequency;
-	private int location;
+	public String location;
 	private HuffmanNode[] childrenNodes;
 	
-	HuffmanNode(Integer ASCIIVal, int frequency, Integer location, HuffmanNode[] childrenNodes) {
+	HuffmanNode(Integer ASCIIVal, int frequency, String location, HuffmanNode[] childrenNodes) {
 		this.ASCIIVal = ASCIIVal; // Nullable, for nodes representing frequency sums
 		this.frequency = frequency;
 		this.location = location;
@@ -14,5 +14,13 @@ public class HuffmanNode {
 	
 	public int getFrequency() {
 		return frequency;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	
+	public HuffmanNode[] getChildrenNodes() {
+		return childrenNodes;
 	}
 }

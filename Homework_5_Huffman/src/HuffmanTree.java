@@ -17,16 +17,55 @@ public class HuffmanTree {
 		}
 		
 		// Create binary tree using sorted nodes
-		for (int charIndex = 0; charIndex < charFrequencyNodes.size(); charIndex += 2) {
-			int sumFrequency = charFrequencyNodes.get(charIndex).getFrequency() + charFrequencyNodes.get(charIndex + 1).getFrequency();
-			HuffmanNode[] sumFrequencyChildren = new HuffmanNode[] { charFrequencyNodes.get(charIndex), charFrequencyNodes.get(charIndex + 1) };
-			HuffmanNode sumNode = new HuffmanNode(null, sumFrequency, null, sumFrequencyChildren);
-		}
+		charFrequencyNodes = createBinaryTree(charFrequencyNodes);
 	}
 	
-	//private HuffmanNode[] createBinaryTree(HuffmanNode[] charFrequencyNodes) {
-	//	// Base case: there are no more
-	//}
+	private ArrayList<HuffmanNode> createBinaryTree(ArrayList<HuffmanNode> charFrequencyNodes) {
+
+		HuffmanNode[] leastFrequentNodes = new HuffmanNode[] { charFrequencyNodes.get(0), charFrequencyNodes.get(1) };
+		int leastFrequenciesSum = leastFrequentNodes[0].getFrequency() + leastFrequentNodes[1].getFrequency();
+		HuffmanNode sumNode = new HuffmanNode(null, leastFrequenciesSum, null, leastFrequentNodes);
+		
+		// Base case: the two smallest nodes are the last nodes
+		if (charFrequencyNodes.size() == leastFrequentNodes.length) {
+			//return new ArrayList<HuffmanNode>( new HuffmanNode[] { sumNode }); // sumNode is the root node
+
+			// Assign each node a location
+		}
+		
+		// Otherwise, the two smallest nodes are not the last nodes
+		// Position sumNode in the new list of nodes
+		charFrequencyNodes.remove(0);
+		charFrequencyNodes.remove(1);
+		for (int i = 0; i < charFrequencyNodes.size(); i++) {
+			if (sumNode.getFrequency() <= charFrequencyNodes.get(i).getFrequency()) {
+				charFrequencyNodes.add(i, sumNode);
+			}
+		}
+		return createBinaryTree(charFrequencyNodes);
+	}
+	
+	private void assignLocations(HuffmanNode node) {
+		// Base case: this node has no children
+		if (!node.getChildrenNodes().equals(null)) {
+			for (int i = 0; i < node.getChildrenNodes().length; i++) {
+				HuffmanNode childNode = node.getChildrenNodes()[i];
+				String childPath = Integer.toString(i);
+				
+				// Before adding current node's location to child location, check if current node is root
+				if (node.getLocation() != null) {
+					String currentLocation = node.getLocation();
+					String childLocation = currentLocation + childPath;
+					childNode.location = childLocation;
+				} else {
+					childNode.location = childPath;
+				}
+				
+				// Recursion: Do ^^ for all this node's children
+				assignLocations(childNode);
+			}
+		}
+	}
 	
 	public void write(PrintStream output) {
 		
