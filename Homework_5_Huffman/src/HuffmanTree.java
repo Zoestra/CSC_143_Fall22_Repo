@@ -28,9 +28,14 @@ public class HuffmanTree {
 		
 		// Base case: the two smallest nodes are the last nodes
 		if (charFrequencyNodes.size() == leastFrequentNodes.length) {
-			//return new ArrayList<HuffmanNode>( new HuffmanNode[] { sumNode }); // sumNode is the root node
 
 			// Assign each node a location
+			assignLocations(sumNode);
+			
+			// Return organized tree
+			ArrayList<HuffmanNode> returnTree = new ArrayList<HuffmanNode>();
+			returnTree.add(sumNode);
+			return returnTree;
 		}
 		
 		// Otherwise, the two smallest nodes are not the last nodes
