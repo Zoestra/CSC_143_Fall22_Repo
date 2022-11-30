@@ -50,6 +50,9 @@ public class HuffmanTree {
 		return createBinaryTree(charFrequencyNodes);
 	}
 	
+	/*
+	 * Given a node with a certain location, add a location to each of it's children
+	 */
 	private void assignLocations(HuffmanNode node) {
 		// Base case: this node has no children
 		if (!node.getChildrenNodes().equals(null)) {
@@ -59,10 +62,12 @@ public class HuffmanTree {
 				
 				// Before adding current node's location to child location, check if current node is root
 				if (node.getLocation() != null) {
+					// node is not the root: child's location is current location + child's path from current location
 					String currentLocation = node.getLocation();
 					String childLocation = currentLocation + childPath;
 					childNode.location = childLocation;
 				} else {
+					// node is the root: child's location is it's path from the root
 					childNode.location = childPath;
 				}
 				
