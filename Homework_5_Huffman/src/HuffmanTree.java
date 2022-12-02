@@ -2,82 +2,54 @@ import java.io.*;
 import java.util.*;
 
 public class HuffmanTree {
-	ArrayList<HuffmanNode> charFrequencyNodes;
+	private PriorityQueue<HuffmanNode> tree = new PriorityQueue<HuffmanNode>(new NodeComparator());
 	
-
-	HuffmanTree(int[] count) { // count: Array with 256 indices representing ASCII. Values represent ASCII frequencies
-		// Create a leaf node for each character/frequency pair
-		// Use Merge Sort to put leaf nodes in priority queue based on frequency (low -> high)
-		for (int charIndex = 0; charIndex < count.length; charIndex++) { // TODO: Change to merge sort
-			for(int j = charIndex; j < count.length - charIndex; j++) {
-				if (count[charIndex] >= count[j]) {
-					charFrequencyNodes.add(new HuffmanNode(charIndex, count[charIndex], null, null));	
-				}
+	public HuffmanTree(int[] count) {
+		// Given array of (ASCII, Frequency) pairs, temporarily sort these pairs in tree
+		for (int ASCII = 0; ASCII < count.length; ASCII++) {
+			if (count[ASCII] > 0) {
+				tree.add(new HuffmanNode(ASCII, count[ASCII], null));
 			}
 		}
 		
-		// Create binary tree using sorted nodes
-		charFrequencyNodes = createBinaryTree(charFrequencyNodes);
-	}
-	
-	private ArrayList<HuffmanNode> createBinaryTree(ArrayList<HuffmanNode> charFrequencyNodes) {
-
-		HuffmanNode[] leastFrequentNodes = new HuffmanNode[] { charFrequencyNodes.get(0), charFrequencyNodes.get(1) };
-		int leastFrequenciesSum = leastFrequentNodes[0].getFrequency() + leastFrequentNodes[1].getFrequency();
-		HuffmanNode sumNode = new HuffmanNode(null, leastFrequenciesSum, null, leastFrequentNodes);
-		
-		// Base case: the two smallest nodes are the last nodes
-		if (charFrequencyNodes.size() == leastFrequentNodes.length) {
-
-			// Assign each node a location
-			assignLocations(sumNode);
-			
-			// Return organized tree
-			ArrayList<HuffmanNode> returnTree = new ArrayList<HuffmanNode>();
-			returnTree.add(sumNode);
-			return returnTree;
-		}
-		
-		// Otherwise, the two smallest nodes are not the last nodes
-		// Position sumNode in the new list of nodes
-		charFrequencyNodes.remove(0);
-		charFrequencyNodes.remove(1);
-		for (int i = 0; i < charFrequencyNodes.size(); i++) {
-			if (sumNode.getFrequency() <= charFrequencyNodes.get(i).getFrequency()) {
-				charFrequencyNodes.add(i, sumNode);
-			}
-		}
-		return createBinaryTree(charFrequencyNodes);
+		// Create branches for tree structure
+		createBranches();
 	}
 	
 	/*
-	 * Given a node with a certain location, add a location to each of it's children
+	 * Organize tree into branches as long as there are more than 1 nodes
 	 */
-	private void assignLocations(HuffmanNode node) {
-		// Base case: this node has no children
-		if (!node.getChildrenNodes().equals(null)) {
-			for (int i = 0; i < node.getChildrenNodes().length; i++) {
-				HuffmanNode childNode = node.getChildrenNodes()[i];
-				String childPath = Integer.toString(i);
-				
-				// Before adding current node's location to child location, check if current node is root
-				if (node.getLocation() != null) {
-					// node is not the root: child's location is current location + child's path from current location
-					String currentLocation = node.getLocation();
-					String childLocation = currentLocation + childPath;
-					childNode.location = childLocation;
-				} else {
-					// node is the root: child's location is it's path from the root
-					childNode.location = childPath;
-				}
-				
-				// Recursion: Do ^^ for all this node's children
-				assignLocations(childNode);
-			}
+	private void createBranches() {
+		while (tree.size() > 1) {
+			// Remove 2 least frequent nodes from the tree
+			HuffmanNode leastFrequentNode1 = tree.poll();
+			HuffmanNode leastFrequentNode2 = tree.poll();
+			
+			// Add them back as children to a new branch node
+			int combinedFrequency = leastFrequentNode1.getFrequency() + leastFrequentNode2.getFrequency();
+			HuffmanNode[] branchChildren = new HuffmanNode[] { leastFrequentNode1, leastFrequentNode2 };
+			HuffmanNode branchNode = new HuffmanNode(null, combinedFrequency, branchChildren);
+			tree.add(branchNode);	
 		}
 	}
 	
 	public void write(PrintStream output) {
 		
+	}
+}
+
+/*
+ * Defines a special way to compare HuffmanNodes: by frequency
+ */
+class NodeComparator implements Comparator<HuffmanNode> {	
+	@Override
+	public int compare(HuffmanNode node1, HuffmanNode node2) {
+		if (node1.getFrequency() > node2.getFrequency()) {
+			return 1;
+		} else if (node1.getFrequency() < node2.getFrequency()) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 }

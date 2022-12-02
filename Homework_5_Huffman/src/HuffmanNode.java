@@ -1,26 +1,21 @@
+import java.util.*;
 
-public class HuffmanNode {
-	private int ASCIIVal;
+public class HuffmanNode{
+	private Integer ASCII;
 	private int frequency;
-	public String location;
-	private HuffmanNode[] childrenNodes;
+	private HuffmanNode[] childNodes;
 	
-	HuffmanNode(Integer ASCIIVal, int frequency, String location, HuffmanNode[] childrenNodes) {
-		this.ASCIIVal = ASCIIVal; // Nullable, for nodes representing frequency sums
+	public HuffmanNode(Integer ASCII, int frequency, HuffmanNode[] childNodes) {
+		this.ASCII = ASCII;
 		this.frequency = frequency;
-		this.location = location;
-		this.childrenNodes = childrenNodes;
+		this.childNodes = childNodes;
+	}
+	
+	public int getASCII() {
+		return ASCII;
 	}
 	
 	public int getFrequency() {
 		return frequency;
-	}
-	
-	public String getLocation() {
-		return location;
-	}
-	
-	public HuffmanNode[] getChildrenNodes() {
-		return childrenNodes;
 	}
 }

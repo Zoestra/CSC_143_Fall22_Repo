@@ -1,7 +1,9 @@
-/BitInputStream.class
-/BitOutputStream.class
-/Decode.class
-/Encode.class
+/HuffmanTree2.class
+/HuffmanNode2.class
+/HuffmanNode_Old.class
 /HuffmanNode.class
+/HuffmanTree_Old.class
 /HuffmanTree.class
-/MakeCode.class
+/SumNode.class
+/HuffmanNode_New.class
+/NodeComparator.class
