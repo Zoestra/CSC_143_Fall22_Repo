@@ -3,6 +3,7 @@ import java.util.*;
 public class HuffmanNode{
 	private Integer ASCII;
 	private int frequency;
+	private String location;
 	private HuffmanNode[] childNodes;
 	
 	public HuffmanNode(Integer ASCII, int frequency, HuffmanNode[] childNodes) {
@@ -17,5 +18,17 @@ public class HuffmanNode{
 	
 	public int getFrequency() {
 		return frequency;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	
+	public void setLocation(String locationSet) {
+		location = locationSet;
+	}
+	
+	public HuffmanNode[] getChildren() {
+		return childNodes;
 	}
 }

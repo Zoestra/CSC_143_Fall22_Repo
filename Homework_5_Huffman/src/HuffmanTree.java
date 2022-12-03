@@ -14,6 +14,9 @@ public class HuffmanTree {
 		
 		// Create branches for tree structure
 		createBranches();
+		
+		// Set locations for each node (relative to the root)
+		setLocations(tree.element());
 	}
 	
 	/*
@@ -33,13 +36,58 @@ public class HuffmanTree {
 		}
 	}
 	
-	public void write(PrintStream output) {
-		
+	/*
+	 * Set locations for each node
+	 */
+	public void setLocations(HuffmanNode currentNode) {
+		// Base case: current node has no children to locate
+		int childCount = currentNode.getChildren().length; 
+		if (childCount > 0) {
+			// For each of this node's children:
+			for (int childIndex = 0; childIndex < childCount; childIndex++) {
+				HuffmanNode childNode = currentNode.getChildren()[childIndex];
+				
+				// Set child's relative location
+				if (currentNode.getLocation() == null) {
+					// Current node is root node
+					// Child's location = path from root
+					String location = childIndex + "";
+					childNode.setLocation(location);
+					
+					// Recursion: Repeat for each child's child
+					setLocations(childNode);
+				} else {
+					// Current node is somewhere down the tree
+					// Child's location = current location + path from current location
+					String location = currentNode.getLocation() + childIndex;
+					childNode.setLocation(location);
+					
+					// Recursion: Repeat for each child's child
+					setLocations(childNode);
+				}
+			}
+		}
+	}
+	
+	/*
+	 * Write info regarding each node: ASCII and tree location
+	 */
+	public void write(PrintStream output, HuffmanNode currentNode) {
+		// Base case: node has no children to locate
+		int childCount = currentNode.getChildren().length; 
+		if (childCount > 0) {
+			// For each of this node's children:
+			for (int childIndex = 0; childIndex < childCount; childIndex++) {
+				// Print its ASCII value and relative location
+				HuffmanNode childNode = currentNode.getChildren()[childIndex];
+				output.println(childNode.getASCII() + "\n" + childNode.getLocation());
+			}
+		}
 	}
 }
 
 /*
- * Defines a special way to compare HuffmanNodes: by frequency
+ * Defines HuffmanNode comparison: by frequency
  */
 class NodeComparator implements Comparator<HuffmanNode> {	
 	@Override
