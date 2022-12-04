@@ -4,11 +4,15 @@ import java.util.*;
 public class HuffmanTree {
 	private PriorityQueue<HuffmanNode> tree = new PriorityQueue<HuffmanNode>(new NodeComparator());
 	
+	/* 
+	 * Constructs a HuffmanTree using the given array of frequencies.
+	 * count[i] is the number of occurrences of the character with ASCII value i.
+	 */
 	public HuffmanTree(int[] count) {
 		// Given array of (ASCII, Frequency) pairs, temporarily sort these pairs in tree
 		for (int ASCII = 0; ASCII < count.length; ASCII++) {
 			if (count[ASCII] > 0) {
-				tree.add(new HuffmanNode(ASCII, count[ASCII], null));
+				tree.add(new HuffmanNode(ASCII, count[ASCII], null, null));
 			}
 		}
 		
@@ -16,22 +20,23 @@ public class HuffmanTree {
 		createBranches();
 		
 		// Set locations for each node (relative to the root)
-		setLocations(tree.element());
+		setLocations(getRootNode());
 	}
 	
 	/*
 	 * Organize tree into branches as long as there are more than 1 nodes
 	 */
 	private void createBranches() {
+		// Base case: tree contains a single node: the root
 		while (tree.size() > 1) {
-			// Remove 2 least frequent nodes from the tree
+			// Otherwise, remove 2 least frequent nodes from the tree
 			HuffmanNode leastFrequentNode1 = tree.poll();
 			HuffmanNode leastFrequentNode2 = tree.poll();
 			
 			// Add them back as children to a new branch node
 			int combinedFrequency = leastFrequentNode1.getFrequency() + leastFrequentNode2.getFrequency();
 			HuffmanNode[] branchChildren = new HuffmanNode[] { leastFrequentNode1, leastFrequentNode2 };
-			HuffmanNode branchNode = new HuffmanNode(null, combinedFrequency, branchChildren);
+			HuffmanNode branchNode = new HuffmanNode(null, combinedFrequency, null, branchChildren);
 			tree.add(branchNode);	
 		}
 	}
@@ -70,7 +75,7 @@ public class HuffmanTree {
 	}
 	
 	/*
-	 * Write info regarding each node: ASCII and tree location
+	 * Writes the current tree to the given output stream in standard format.
 	 */
 	public void write(PrintStream output, HuffmanNode currentNode) {
 		// Base case: node has no children to locate
@@ -80,9 +85,58 @@ public class HuffmanTree {
 			for (int childIndex = 0; childIndex < childCount; childIndex++) {
 				// Print its ASCII value and relative location
 				HuffmanNode childNode = currentNode.getChildren()[childIndex];
-				output.println(childNode.getASCII() + "\n" + childNode.getLocation());
+				output.println(childNode.getASCII() + "\n" + childNode.getLocation()); // TODO: is println() the correct method?
 			}
 		}
+	}
+	
+	/*
+	 * Alternative constructor: takes file created by write() method ^^
+	 * 
+	 * Creates a HuffmanTree from the Scanner.
+	 * Assumes the Scanner contains a tree description in standard format.
+	 */
+	public HuffmanTree(Scanner input) {
+		// Read input file to construct tree
+		while(input.hasNext()) {
+			int ASCII = Integer.parseInt(input.nextLine());
+			String location = input.nextLine();
+			tree.add(new HuffmanNode(ASCII, -1, location, null));
+		}
+	}
+	 /*
+	  * Reads bits from the given input stream and writes the corresponding characters to the output.
+	  * 
+	  * Stops reading when it encounters a character with value equal to eof.
+	  * (This is a pseudo-eof character, so it should not be written to the output file.)
+	  * 
+	  * Assumes the input stream contains a legal encoding of characters for this tree’s Huffman code.
+	  */
+	public void decode(BitInputStream input, PrintStream output, int eof) {
+		HuffmanNode currentNode = getRootNode();
+		int readBit = input.readBit();
+		while (readBit == 0 || readBit == 1) {
+			if (currentNode.getChildren()[readBit] != null) {
+				// We haven't reached a leaf node yet: Move down one level
+				currentNode = currentNode.getChildren()[readBit];
+			} else {
+				// currentNode is a leaf node: write its ASCII into output
+				output.write(currentNode.getASCII());
+				
+				// Start back at the top of the tree
+				currentNode = getRootNode();
+			}
+
+			// Move on to the next bit
+			readBit = input.readBit();
+		}
+	}
+	
+	/*
+	 * Returns the first node in tree
+	 */
+	public HuffmanNode getRootNode() {
+		return tree.element();
 	}
 }
 

@@ -38,7 +38,7 @@ public class MakeCode {
 			// build tree, open output file, print codes
 			HuffmanTree t = new HuffmanTree(count);
 			PrintStream output = new PrintStream(new File(codeFile));
-			t.write(output);
+			t.write(output, t.getRootNode());
 		} catch (IOException e) {
 			System.out.println(e);
 		}

@@ -6,9 +6,10 @@ public class HuffmanNode{
 	private String location;
 	private HuffmanNode[] childNodes;
 	
-	public HuffmanNode(Integer ASCII, int frequency, HuffmanNode[] childNodes) {
+	public HuffmanNode(Integer ASCII, int frequency, String location, HuffmanNode[] childNodes) {
 		this.ASCII = ASCII;
 		this.frequency = frequency;
+		this.location = location;
 		this.childNodes = childNodes;
 	}
 	
