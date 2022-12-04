@@ -85,7 +85,7 @@ public class HuffmanTree {
 			for (int childIndex = 0; childIndex < childCount; childIndex++) {
 				// Print its ASCII value and relative location
 				HuffmanNode childNode = currentNode.getChildren()[childIndex];
-				output.println(childNode.getASCII() + "\n" + childNode.getLocation()); // TODO: is println() the correct method?
+				output.append(childNode.getASCII() + "\n" + childNode.getLocation()); // TODO: is append() the correct method?
 			}
 		}
 	}
@@ -130,6 +130,9 @@ public class HuffmanTree {
 			// Move on to the next bit
 			readBit = input.readBit();
 		}
+		
+		// Close input stream
+		input.finalize();
 	}
 	
 	/*
