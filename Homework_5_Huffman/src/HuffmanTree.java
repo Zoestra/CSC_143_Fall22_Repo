@@ -48,19 +48,24 @@ public class HuffmanTree {
 			for (int childIndex = 0; childIndex < currentChildren.length; childIndex++) {
 				HuffmanNode childNode = currentChildren[childIndex];
 				
+				// Make location opposite childIndex (to match prof's tree)
+				int direction = 0;
+				if (childIndex == 0) {
+					direction = 1;
+				}
+				
 				// Set child's relative location
 				if (currentNode.getLocation() == null) {
 					// Current node is root node
 					// Child's location = path from root
-					String location = childIndex + "";
-					childNode.setLocation(location);
+					childNode.setLocation(direction + "");
 					
 					// Recursion: Repeat for each child's child
 					setLocations(childNode);
 				} else {
 					// Current node is somewhere down the tree
 					// Child's location = current location + path from current location
-					String location = currentNode.getLocation() + childIndex;
+					String location = currentNode.getLocation() + direction;
 					childNode.setLocation(location);
 					
 					// Recursion: Repeat for each child's child
