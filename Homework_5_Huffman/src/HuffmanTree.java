@@ -46,11 +46,11 @@ public class HuffmanTree {
 	 */
 	public void setLocations(HuffmanNode currentNode) {
 		// Base case: current node has no children to locate
-		int childCount = currentNode.getChildren().length; 
-		if (childCount > 0) {
+		HuffmanNode[] currentChildren = currentNode.getChildren(); 
+		if (currentChildren != null) {
 			// For each of this node's children:
-			for (int childIndex = 0; childIndex < childCount; childIndex++) {
-				HuffmanNode childNode = currentNode.getChildren()[childIndex];
+			for (int childIndex = 0; childIndex < currentChildren.length; childIndex++) {
+				HuffmanNode childNode = currentChildren[childIndex];
 				
 				// Set child's relative location
 				if (currentNode.getLocation() == null) {
@@ -83,9 +83,12 @@ public class HuffmanTree {
 		if (childCount > 0) {
 			// For each of this node's children:
 			for (int childIndex = 0; childIndex < childCount; childIndex++) {
-				// Print its ASCII value and relative location
 				HuffmanNode childNode = currentNode.getChildren()[childIndex];
-				output.append(childNode.getASCII() + "\n" + childNode.getLocation()); // TODO: is append() the correct method?
+				// If not a branch node
+				if (childNode.getASCII() != null) {
+					// Write its ASCII value and relative location
+					output.append(childNode.getASCII() + "\n" + childNode.getLocation()); // TODO: is append() the correct method?	
+				}
 			}
 		}
 	}

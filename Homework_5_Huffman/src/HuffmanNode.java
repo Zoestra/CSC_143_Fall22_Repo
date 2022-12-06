@@ -13,7 +13,7 @@ public class HuffmanNode{
 		this.childNodes = childNodes;
 	}
 	
-	public int getASCII() {
+	public Integer getASCII() {
 		return ASCII;
 	}
 	
