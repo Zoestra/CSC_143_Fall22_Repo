@@ -15,30 +15,26 @@ public class HuffmanTree {
 				tree.add(new HuffmanNode(ASCII, count[ASCII], null, null));
 			}
 		}
+
+		// Add the "end-of-file" character
+		tree.add(new HuffmanNode(256, 1, null, null));
 		
 		// Using ordered queue of nodes, create branches for tree structure
-		createBranches();
-		
-		// Set locations for each node (relative to the root)
-		setLocations(getRootNode());
-	}
-	
-	/*
-	 * Organize tree into branches as long as there are more than 1 nodes
-	 */
-	private void createBranches() {
 		// Base case: tree contains a single node: the root
 		while (tree.size() > 1) {
 			// Otherwise, remove 2 least frequent nodes from the tree
 			HuffmanNode leastFrequentNode1 = tree.poll();
 			HuffmanNode leastFrequentNode2 = tree.poll();
-			
+					
 			// Add them back as children to a new branch node
 			int combinedFrequency = leastFrequentNode1.getFrequency() + leastFrequentNode2.getFrequency();
 			HuffmanNode[] branchChildren = new HuffmanNode[] { leastFrequentNode1, leastFrequentNode2 };
 			HuffmanNode branchNode = new HuffmanNode(null, combinedFrequency, null, branchChildren);
 			tree.add(branchNode);	
 		}
+		
+		// Set locations for each node (relative to the root)
+		setLocations(getRootNode());
 	}
 	
 	/*
@@ -140,10 +136,17 @@ public class HuffmanTree {
 	}
 	
 	/*
-	 * Returns the first node in tree
+	 * Returns the node with highest frequency in tree
 	 */
 	public HuffmanNode getRootNode() {
-		return tree.element();
+		if (tree.size() == 0) {
+			System.out.println("No root node for tree of zero size.");
+			return null;
+		} else if (tree.size() == 1) {
+			return tree.peek();
+		} else {
+			return (HuffmanNode) tree.toArray()[-1];	
+		}
 	}
 }
 
