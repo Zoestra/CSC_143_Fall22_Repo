@@ -16,7 +16,7 @@ public class HuffmanTree {
 			}
 		}
 		
-		// Create branches for tree structure
+		// Using ordered queue of nodes, create branches for tree structure
 		createBranches();
 		
 		// Set locations for each node (relative to the root)
@@ -79,16 +79,17 @@ public class HuffmanTree {
 	 */
 	public void write(PrintStream output, HuffmanNode currentNode) {
 		// Base case: node has no children to locate
-		int childCount = currentNode.getChildren().length; 
-		if (childCount > 0) {
+		if (currentNode.getChildren() != null) {
 			// For each of this node's children:
-			for (int childIndex = 0; childIndex < childCount; childIndex++) {
+			for (int childIndex = 0; childIndex < currentNode.getChildren().length; childIndex++) {
 				HuffmanNode childNode = currentNode.getChildren()[childIndex];
 				// If not a branch node
 				if (childNode.getASCII() != null) {
 					// Write its ASCII value and relative location
-					output.append(childNode.getASCII() + "\n" + childNode.getLocation()); // TODO: is append() the correct method?	
+					output.println(childNode.getASCII() + "\n" + childNode.getLocation());	
 				}
+				// Recursion: Do ^^ for child's children
+				write(output, childNode);
 			}
 		}
 	}
@@ -150,7 +151,6 @@ public class HuffmanTree {
  * Defines HuffmanNode comparison: by frequency
  */
 class NodeComparator implements Comparator<HuffmanNode> {	
-	@Override
 	public int compare(HuffmanNode node1, HuffmanNode node2) {
 		if (node1.getFrequency() > node2.getFrequency()) {
 			return 1;
