@@ -119,10 +119,20 @@ public class HuffmanTree {
 		if (tree.size() > 1) {
 			// Each node should have a sibling in its branch
 			HuffmanNode siblingNode  = getSiblingNode(furthestNode.getLocation());
-			HuffmanNode[] childNodes = new HuffmanNode[] { furthestNode, siblingNode };
 			
-			// Create a parent node for these siblings
-			String parentLocation = getParentLocation(furthestNode.getLocation());
+			// Find out which sibling is left / right
+			HuffmanNode[] childNodes = new HuffmanNode[] { furthestNode, siblingNode };
+			String[] siblingLocation = siblingNode.getLocation().split("");
+			if (siblingLocation[siblingLocation.length - 1].equals("1")) {
+				childNodes = new HuffmanNode[] { siblingNode, furthestNode };
+			}
+			
+			// Get location of parent node
+			ArrayList<String> locationStringSplit = new ArrayList<String> (Arrays.asList(furthestNode.getLocation().split("")));			
+			locationStringSplit.remove(locationStringSplit.size() - 1);
+			String parentLocation = String.join("", locationStringSplit);
+			
+			// Create parent node
 			tree.add(new HuffmanNode(null, -1, parentLocation, childNodes));
 			
 			// Remove children, since they are now part of organized tree
@@ -177,16 +187,6 @@ public class HuffmanTree {
 		return null;
 	}
 	
-	private String getParentLocation(String currentLocation) {
-		if (currentLocation != null) {
-			ArrayList<String> locationStringSplit = new ArrayList<String> (Arrays.asList(currentLocation.split("")));
-			locationStringSplit.remove(locationStringSplit.size() - 1);
-			return String.join("", locationStringSplit);
-		} else {
-			return null;
-		}
-	}
-	
 	 /*
 	  * Reads bits from the given input stream and writes the corresponding characters to the output.
 	  * 
@@ -226,7 +226,8 @@ public class HuffmanTree {
 			System.out.println("No root node for tree of zero size.");
 			return null;
 		} else if (tree.size() == 1) {
-			return tree.peek();
+			HuffmanNode rootNode = tree.peek(); 
+			return rootNode;
 		} else {
 			Object[] arrayFromTree = tree.toArray();
 			if (arrayFromTree[arrayFromTree.length - 1] instanceof HuffmanNode) {
