@@ -106,9 +106,39 @@ public class HuffmanTree {
 		while(input.hasNext()) {
 			int ASCII = Integer.parseInt(input.nextLine());
 			String location = input.nextLine();
+			// Frequency is ignored: set to -1
 			tree.add(new HuffmanNode(ASCII, -1, location, null));
 		}
+		
+		// Based on the location, organize parents / children
+		createBranchesFromLocations(furthestNodeByLocation());
 	}
+	
+	private void createBranchesFromLocations(HuffmanNode furthestNode) {
+		// Base case: tree has no leaf nodes. Just a root
+		if (tree.size() > 1) {
+			
+		}
+	}
+	
+	private HuffmanNode furthestNodeByLocation() {
+		// Find the furthest location
+		String furthestLocation = "";
+		for (HuffmanNode node : tree) {
+			if (node.getLocation().length() > furthestLocation.length()) {
+				furthestLocation = node.getLocation();
+			}
+		}
+		
+		// Return the node associated with that location
+		for (HuffmanNode node : tree) {
+			if (node.getLocation().equals(furthestLocation)) {
+				return node;
+			}
+		}
+		return null;
+	}
+	
 	 /*
 	  * Reads bits from the given input stream and writes the corresponding characters to the output.
 	  * 
@@ -121,7 +151,7 @@ public class HuffmanTree {
 		HuffmanNode currentNode = getRootNode();
 		int readBit = input.readBit();
 		while (readBit == 0 || readBit == 1) {
-			if (currentNode.getChildren()[readBit] != null) {
+			if (currentNode.getChildren() != null) {
 				// We haven't reached a leaf node yet: Move down one level
 				currentNode = currentNode.getChildren()[readBit];
 			} else {
@@ -150,7 +180,12 @@ public class HuffmanTree {
 		} else if (tree.size() == 1) {
 			return tree.peek();
 		} else {
-			return (HuffmanNode) tree.toArray()[-1];	
+			Object[] arrayFromTree = tree.toArray();
+			if (arrayFromTree[arrayFromTree.length - 1] instanceof HuffmanNode) {
+				return (HuffmanNode) arrayFromTree[arrayFromTree.length - 1];	
+			} else {
+				return null;
+			}
 		}
 	}
 }
