@@ -117,7 +117,20 @@ public class HuffmanTree {
 	private void createBranchesFromLocations(HuffmanNode furthestNode) {
 		// Base case: tree has no leaf nodes. Just a root
 		if (tree.size() > 1) {
+			// Each node should have a sibling in its branch
+			HuffmanNode siblingNode  = getSiblingNode(furthestNode.getLocation());
+			HuffmanNode[] childNodes = new HuffmanNode[] { furthestNode, siblingNode };
 			
+			// Create a parent node for these siblings
+			String parentLocation = getParentLocation(furthestNode.getLocation());
+			tree.add(new HuffmanNode(null, -1, parentLocation, childNodes));
+			
+			// Remove children, since they are now part of organized tree
+			tree.remove(furthestNode);
+			tree.remove(siblingNode);
+			
+			// Recursion: Repeat ^^ for the next furthest node
+			createBranchesFromLocations(furthestNodeByLocation());
 		}
 	}
 	
@@ -137,6 +150,41 @@ public class HuffmanTree {
 			}
 		}
 		return null;
+	}
+	
+	private HuffmanNode getSiblingNode(String currentLocation) {
+		// Get corresponding location
+		ArrayList<String> locationStringSplit = new ArrayList<String> (Arrays.asList(currentLocation.split("")));
+		if (locationStringSplit.get(locationStringSplit.size() - 1).equals("0")) {
+			locationStringSplit.remove(locationStringSplit.size() - 1);
+			locationStringSplit.add("1");
+		} else {
+			locationStringSplit.remove(locationStringSplit.size() - 1);
+			locationStringSplit.add("0");
+		}
+		String siblingLocation = String.join("", locationStringSplit);
+		
+		// Check if location matches any node in tree
+		Object[] arrayFromTree = tree.toArray();
+		for (Object object : arrayFromTree) {
+			if (object instanceof HuffmanNode) {
+				if (((HuffmanNode) object).getLocation().equals(siblingLocation)) {
+					// Location matches node: Return it
+					return (HuffmanNode) object;
+				}
+			}
+		}
+		return null;
+	}
+	
+	private String getParentLocation(String currentLocation) {
+		if (currentLocation != null) {
+			ArrayList<String> locationStringSplit = new ArrayList<String> (Arrays.asList(currentLocation.split("")));
+			locationStringSplit.remove(locationStringSplit.size() - 1);
+			return String.join("", locationStringSplit);
+		} else {
+			return null;
+		}
 	}
 	
 	 /*
