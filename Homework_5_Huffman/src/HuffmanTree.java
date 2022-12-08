@@ -195,9 +195,9 @@ public class HuffmanTree {
 	  * 
 	  * Assumes the input stream contains a legal encoding of characters for this tree’s Huffman code.
 	  */
-    public void decode(BitInputStream input, PrintStream output, int eof) {
+	public void decode(BitInputStream input, PrintStream output, int eof) {
         // loop until the byte value = eof
-		int readBit = input.readBit();
+        int readBit = input.readBit();
         while(true) {
             HuffmanNode currentNode = getRootNode();
             int byteValue = 0;
@@ -214,6 +214,7 @@ public class HuffmanTree {
                 if (readBit == 1) {
                 	reverseBit = 0;
                 }
+                
                 currentNode = currentNode.getChildren()[reverseBit];
                 readBit = input.readBit();
             }
