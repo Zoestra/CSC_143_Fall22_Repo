@@ -198,7 +198,11 @@ public class HuffmanTree {
 	public void decode(BitInputStream input, PrintStream output, int eof) {
 		HuffmanNode currentNode = getRootNode();
 		int readBit = input.readBit();
-		while (readBit == 0 || readBit == 1) {
+
+		// While our current node is either a branch node (null ASCII), or a leaf node where ASCII != 256
+		while (currentNode.getASCII() == null || currentNode.getASCII() != eof) {
+
+			// Check if we're in a branch node
 			if (currentNode.getChildren() != null) {
 				// We haven't reached a leaf node yet: Move down one level
 				currentNode = currentNode.getChildren()[readBit];
