@@ -195,32 +195,37 @@ public class HuffmanTree {
 	  * 
 	  * Assumes the input stream contains a legal encoding of characters for this tree’s Huffman code.
 	  */
-	public void decode(BitInputStream input, PrintStream output, int eof) {
-		HuffmanNode currentNode = getRootNode();
+    public void decode(BitInputStream input, PrintStream output, int eof) {
+        // loop until the byte value = eof
 		int readBit = input.readBit();
-
-		// While our current node is either a branch node (null ASCII), or a leaf node where ASCII != 256
-		while (readBit == 0 || readBit == 1) {
-
-			// Check if we're in a branch node
-			if (currentNode.getChildren() != null) {
-				// We haven't reached a leaf node yet: Move down one level
-				currentNode = currentNode.getChildren()[readBit];
-			} else {
-				// currentNode is a leaf node: write its ASCII into output
-				output.write(currentNode.getASCII());
-				
-				// Start back at the top of the tree
-				currentNode = getRootNode();
-			}
-
-			// Move on to the next bit
-			readBit = input.readBit();
-		}
-		
-		// Close input stream
-		input.finalize();
-	}
+        while(true) {
+            HuffmanNode currentNode = getRootNode();
+            int byteValue = 0;
+            
+            // find the node that contains byte value from our tree
+            while(currentNode != null) {
+                if(currentNode.getASCII() != null) {
+                    // by design, leaf nodes will have byte value more than 1
+                    byteValue = currentNode.getASCII();
+                    break;
+                }
+                
+                int reverseBit = 1;
+                if (readBit == 1) {
+                	reverseBit = 0;
+                }
+                currentNode = currentNode.getChildren()[reverseBit];
+                readBit = input.readBit();
+            }
+            
+            if(byteValue == eof) { // end the file here and don't write our eof to the file
+                break;
+            }
+            
+            //write this byte to output
+            output.write(byteValue);
+        }
+    }
 	
 	/*
 	 * Returns the node with highest frequency in tree
