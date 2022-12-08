@@ -200,7 +200,7 @@ public class HuffmanTree {
 		int readBit = input.readBit();
 
 		// While our current node is either a branch node (null ASCII), or a leaf node where ASCII != 256
-		while (currentNode.getASCII() == null || currentNode.getASCII() != eof) {
+		while (readBit == 0 || readBit == 1) {
 
 			// Check if we're in a branch node
 			if (currentNode.getChildren() != null) {
