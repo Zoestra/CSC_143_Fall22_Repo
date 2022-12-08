@@ -27,7 +27,7 @@ public class Decode {
 		try {
 			Scanner codeInput = new Scanner(new File(codeFile));
 			HuffmanTree t = new HuffmanTree(codeInput);
-
+			t.printTree();
 			// open encoded file, open output, decode
 			BitInputStream input = new BitInputStream(inFile);
 			PrintStream output = new PrintStream(new File(outputFile));
