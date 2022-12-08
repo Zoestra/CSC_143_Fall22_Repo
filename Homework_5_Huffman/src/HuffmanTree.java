@@ -246,6 +246,20 @@ public class HuffmanTree {
 			}
 		}
 	}
+
+	public void printTree(){
+		printTree(getRootNode());
+	}
+
+	public void printTree(HuffmanNode node){
+		System.out.println(node.toString());
+
+		if (node.getChildren() != null) {
+			for (HuffmanNode childNode : node.getChildren()) {
+				printTree(childNode);
+			}
+		}
+	}
 }
 
 /*
